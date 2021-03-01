@@ -1,0 +1,38 @@
+<div class="mr-auto ml-auto w-100 h-100" style="margin-top:15%;align-self: center;">
+
+    <form [formGroup]="testForm" style="align-items: center;align-self: center;text-align: center;">
+        <span class="display-4" style="font-weight: bold;">STOCK SEARCH</span>
+
+        <div class="input-group mx-auto pr-0" style=" border-radius: 10px;width:230px;  margin-top: 30px; ">
+            
+                
+                    <input type="search" name="ticker" class="form-control rounded-pill pr-5 bg-transparent  " value=''
+                        id="ticker" formControlName="ticker" placeholder="Enter stock name"
+                        style="border-color:#6e4ef2; width:200px;" #ticker required [matAutocomplete]="auto">
+                
+                    <button id="searchbutton" class="btn  border-0 ml-n5 mr-5  pr-1 pl-1 pt-0 pb-0" type="submit" (click)="getval(ticker.value)"
+                        [routerLink]="['/details/',ticker.value]" style="z-index:9;">
+                        <i class="fa fa-search"  style="color:#6e4ef2;width: 5px;"></i>
+                    </button>
+
+                
+        </div>
+
+    </form>
+   
+
+</div>
+<mat-autocomplete #auto="matAutocomplete" [panelWidth]="190">
+    <div *ngIf="isLoadingResults==true; then condition01 ">
+    </div>
+    <ng-template #condition01>
+        <mat-option >
+            <div class="d-flex justify-content-start" id="spinner" style="width:90%; height: 100%;">
+                <mat-spinner [diameter]="30"></mat-spinner>
+            </div>
+        </mat-option>
+    </ng-template>
+    <mat-option *ngFor="let option of options" [value]="option.ticker" >
+        <B> {{option.ticker}} </B>| {{option.name}}
+    </mat-option>
+</mat-autocomplete>
