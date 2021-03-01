@@ -1,0 +1,315 @@
+<div *ngIf="isLoadingResults==true; then condition01 else condition02">
+</div>
+<ng-template #condition01>
+    <div class="d-flex justify-content-center w-100 h-100" id="spinner">
+        <mat-spinner [diameter]="70" style="margin-top:10%"></mat-spinner>
+    </div>
+</ng-template>
+<ng-template #condition02>
+    <div class=" w-75 mx-auto mt-4 ">
+        <span class="h3 d-flex justify-content-start  mb-4">My Portfolio</span><br>
+        <div *ngIf="result.length>0 && returnlen() ;then condition1 else condition2">
+        </div>
+        <ng-template #condition1>
+            <div *ngFor="let curr of items " style="font-size:large;">
+                <div *ngIf=" curr.change > 0;">
+                    <!--check here-->
+                    <div class="card ">
+
+                        <a [routerLink]="['/details/',curr.key]">
+                            <div class="card-header">
+
+                                <span class="text-dark h4"> {{curr.key}} </span>
+                                <span class="text-secondary h6">{{curr.name}}</span>
+
+                            </div>
+                        </a>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Quantity:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.quantity}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Avg.Cost / Share:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.avgcost | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">Total
+                                            Cost:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.total | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Change: </div>
+                                        <div class="font-weight-normal" style="color:#45760b;"><svg width="1em"
+                                                height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                                            </svg>{{curr.change | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Current Price:</div>
+                                        <div class="font-weight-normal" style="color:#45760b;">
+                                            {{curr.last | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Market Value:</div>
+                                        <div class="font-weight-normal" style="color:#45760b;">
+                                            {{curr.mktval | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-primary mr-2" data-toggle="modal"
+                                    data-target="#exampleModal" (click)="additem(curr);">Buy</button>
+                                <button type="button" class="btn btn-danger ml-2" data-toggle="modal"
+                                    data-target="#exampleModal2" (click)="additem2(curr);">Sell</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div *ngIf="0 > curr.change;">
+                    <div class="card ">
+                        <a [routerLink]="['/details/',curr.key]">
+                            <div class="card-header">
+                                <span class="text-dark h4"> {{curr.key}} </span>
+                                <span class="text-secondary h6">{{curr.name}}</span>
+                            </div>
+                        </a>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Quantity:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.quantity}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Avg.Cost / Share:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.avgcost | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">Total
+                                            Cost:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.total | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Change: </div>
+                                        <div class="font-weight-normal" style="color:#ec0d0d;"> <svg width="1em"
+                                                height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>{{curr.change | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Current Price:</div>
+                                        <div class="font-weight-normal" style="color:#ec0d0d;">
+                                            {{curr.last | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Market Value:</div>
+                                        <div class=" font-weight-normal" style="color:#ec0d0d;">
+                                            {{curr.mktval | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-primary mr-2" data-toggle="modal"
+                                    data-target="#exampleModal" (click)="additem(curr);">Buy</button>
+                                <button type="button" class="btn btn-danger ml-2" data-toggle="modal"
+                                    data-target="#exampleModal2" (click)="additem2(curr);">Sell</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div *ngIf=" curr.change ==0 ">
+
+                    <div class="card ">
+                        <a [routerLink]="['/details/',curr.key]" class="alert-link">
+                            <div class="card-header">
+
+                                <span class="text-dark h4"> {{curr.key}} </span>
+                                <span class="text-secondary h6">{{curr.name}}</span>
+
+                            </div>
+                        </a>
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-sm-6">
+
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Quantity:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.quantity}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Avg.Cost / Share:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.avgcost | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">Total
+                                            Cost:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.total | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Change: </div>
+                                        <div class="text-dark font-weight-normal">{{curr.change | number : '1.2-3'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Current Price:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.last | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="mr-auto font-weight-normal" style="color:black;">
+                                            Market Value:</div>
+                                        <div class="text-dark font-weight-normal">
+                                            {{curr.mktval | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-primary mr-2" data-toggle="modal"
+                                    data-target="#exampleModal" (click)="additem(curr);">Buy</button>
+                                <button type="button" class="btn btn-danger ml-2" data-toggle="modal"
+                                    data-target="#exampleModal2" (click)="additem2(curr);">Sell</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </ng-template>
+        <ng-template #condition2>
+            <div class="alert alert-warning d-flex justify-content-center" role="alert" *ngIf="!returnlen();">
+                <span class="text-dark"> Currently you don't have any stock.</span>
+            </div>
+        </ng-template>
+
+    </div>
+</ng-template>
+<div class="modal" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <form [formGroup]="modalForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="exampleModalLabel">{{modal_item.key}}</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    Current Price: {{modal_item.last | number :'1.2-2'}}<br>
+                    Quantity <input type="number" name="inputnum" id="inputnum" value=0 min=0 step=1
+                        formControlName="inputnum" oninput="validity.valid||(value='');" autofocus="true" #inputnum> {{ inputnum.focus() }}
+                </div>
+                <div class="modal-footer" style="text-align: left;">
+                    <span class="mr-auto"> Total : {{total   | number :'1.2-2'}} </span>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="buy(); "
+                        [disabled]="inputnum.value === ''|| inputnum.value==0|| 0>inputnum.value">Buy</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="exampleModal2" role="dialog" aria-labelledby="exampleModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form [formGroup]="modalForm2">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="exampleModalLabel2">{{modal_item2.key}}</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    Current Price: {{modal_item2.last | number :'1.2-2'}}<br>
+                    Quantity <input type="number" name="inputnum2" id="inputnum2" value=0 min=0 step=1
+                        formControlName="inputnum2" oninput="validity.valid||(value='');" autofocus="true" #inputnum2> {{ inputnum2.focus() }}
+                </div>
+                <div class="modal-footer" style="text-align: left;">
+                    <span class="mr-auto"> Total : {{total2   | number :'1.2-2'}} </span>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="sell(); "
+                        [disabled]="inputnum2.value === ''|| inputnum2.value==0 || inputnum2.value > modal_item2.quantity || 0>inputnum2.value">Sell</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
