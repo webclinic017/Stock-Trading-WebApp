@@ -1,0 +1,437 @@
+<br>
+<div *ngIf="isLoadingResults==true; then condition01 else condition02">
+</div>
+<ng-template #condition01>
+    <div class="d-flex justify-content-center w-100 h-100" id="spinner">
+        <mat-spinner [diameter]="70" style="margin-top:10%"></mat-spinner>
+    </div>
+</ng-template>
+<ng-template #condition02>
+    <div *ngIf="!isvalid; then condition111 else condition222">
+    </div>
+    <ng-template #condition111>
+        <div class="container" style="text-align: center;">
+            <div class="alert alert-danger " role="alert">
+                <span class="text-dark"> No results found. Pleaser enter valid Ticker.</span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #condition222>
+        <div class="container" style="text-align: center;">
+            <div *ngIf="showloader==true; then condition001">
+            </div>
+            <ng-template #condition001>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <span class="text-dark"> {{companyDetails?.data.ticker}} removed from the Watchlist</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </ng-template>
+            <div *ngIf="showloader2==true; then condition002">
+            </div>
+            <ng-template #condition002>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <span class="text-dark"> {{companyDetails?.data.ticker}} added to the Watchlist</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </ng-template>
+            <div *ngIf="showloader3==true; then condition003">
+            </div>
+            <ng-template #condition003>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <span class="text-dark"> {{companyDetails?.data.ticker}} bought succesfully.</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div style="font-size: 20px;">
+                        <span class="h2 mb-0 pb-0">{{companyDetails?.data.ticker}} </span>
+                        <span *ngIf="isKey(); then condition100 else condition200">
+                        </span>
+                        <ng-template #condition100>
+                            <span style="color:#fdd700">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star-fill mt-n3"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                    (click)="removeStarFunction()">
+                                    <path
+                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                </svg>
+                            </span>
+                        </ng-template>
+                        <ng-template #condition200>
+
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-star  mt-n3"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg" (click)="starFunction()">
+                                <path fill-rule="evenodd"
+                                    d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
+                            </svg>
+
+                        </ng-template>
+                    </div>
+                    <span class="text-secondary h5 mb-5">{{companyDetails?.data.name}}</span><br>
+                    <span class="text-secondary"> {{companyDetails?.data.exchangeCode}}</span>
+                    <br>
+                    <button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#exampleModal2"
+                        (click)="setQuantity();">Buy</button>
+
+                </div>
+
+                <div class="col">
+                    <!--last price, change, percent change, and date/time, on top right-->
+                    <span *ngIf="change>0; then condition1">
+
+                    </span>
+                    <ng-template #condition1>
+                        <div style="color:green;">
+                            <span
+                                class="h2 d-flex justify-content-end mb-0 pb-0">{{data2?.last | number :'1.2-2'}}</span>
+                            <div class="d-flex justify-content-end ">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up-fill"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                                </svg>
+                                <span class="h5 d-flex justify-content-end flex-sm-nowrap">
+                                    {{change  | number : '1.2-2'}}
+                                    ({{changePercent | number : '1.2-2'}}%) </span>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <span *ngIf="0> change; then condition2">
+
+                    </span>
+                    <ng-template #condition2>
+                        <div style="color: 	#E80000  ;">
+                            <span
+                                class=" h2 d-flex justify-content-end mb-0 pb-0">{{data2?.last | number :'1.2-2'}}</span>
+                            <div class="d-flex justify-content-end">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                </svg>
+                                <span class="h5 d-flex justify-content-end ">{{change  | number : '1.2-2'}}
+                                    ({{changePercent | number : '1.2-2'}}%)</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <span *ngIf="change==0; then condition3">
+
+                    </span>
+                    <ng-template #condition3>
+                        <div style="color:black;">
+                            <span
+                                class="h2 d-flex justify-content-end mb-0 pb-0">{{data2?.last | number :'1.2-2'}}</span>
+                            <div class="d-flex justify-content-end">
+
+                                <span class="h5 d-flex justify-content-end">{{change  | number : '1.2-2'}}
+                                    ({{changePercent | number : '1.2-2'}}%)</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <span
+                        class="text-secondary d-flex justify-content-end">{{today | date:'yyyy-MM-dd HH:mm:ss '}}</span>
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class=" col d-flex align-items-end justify-content-center ">
+                    <span *ngIf="timediff>=60; then condition11 else condition22">
+                    </span>
+                    <ng-template #condition11>
+                        <span class="text-dark" style="background-color: #eed7d6;font-weight: lighter;">Market Closed on
+                            {{data2?.timestamp | date:'yyyy-MM-dd HH:mm:ss '}}</span>
+                    </ng-template>
+                    <ng-template #condition22>
+                        <span class="text-success " style="background-color: #d3eed9;">Market is open</span>
+                    </ng-template>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-tab-group mat-stretch-tabs mat-align-tabs="center" animationDuration="0ms">
+                        <mat-tab label="Summary">
+                            <div class="container-fluid">
+                                <!-- summary container-->
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-6">
+                                        <div class="row">
+                                            <div class="col">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <table style="text-align:left">
+                                                            <tr>
+                                                                <td>High Price:</td>
+                                                                <td>
+                                                                    {{data2.high | number :'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Low Price: </td>
+                                                                <td>
+                                                                    {{data2.low | number :'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Open Price: </td>
+                                                                <td>
+                                                                    {{data2.open | number :'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Prev.Close: </td>
+                                                                <td>
+                                                                    {{data2.prevClose | number :'1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Volume: </td>
+                                                                <td>
+                                                                    {{data2.volume  | number}}
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col">
+                                                        <table style="text-align:left;">
+                                                            <tr>
+                                                                <div *ngIf="data2.mid!=null">
+                                                                    <td>Mid Price:</td>
+                                                                    <td>
+                                                                        {{data2.mid | number :'1.2-2'}}
+                                                                    </td>
+                                                                </div>
+                                                                <div *ngIf="timediff<60 && data2.mid==null">
+                                                                    <td>Mid Price:</td>
+                                                                    <td>
+                                                                        -
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                            <tr>
+                                                                <div *ngIf="timediff<60 && data2.askPrice!=null">
+                                                                    <td> Ask Price: </td>
+                                                                    <td>
+                                                                        {{data2.askPrice | number :'1.2-2'}}
+                                                                    </td>
+                                                                </div>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <div *ngIf="timediff<60 && data2.askSize!=null">
+                                                                    <td> Ask Size:</td>
+                                                                    <td>
+                                                                        {{data2.askSize | number :'1.2-2'}}
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                            <tr>
+                                                                <div *ngIf="timediff<60 && data2.bidPrice!=null">
+                                                                    <td>Bid Price:</td>
+                                                                    <td>
+                                                                        {{data2.bidPrice | number :'1.2-2'}}
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                            <tr>
+                                                                <div *ngIf="timediff<60 && data2.bidSize!=null">
+                                                                    <td>Bid Size: </td>
+                                                                    <td>
+                                                                        {{data2.bidSize | number :'1.2-2'}}
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <br><br>
+                                                <p style="text-align: center;font-weight: bold; font-size: medium;">
+                                                    Company's
+                                                    Description</p><br>
+                                                Start Date: {{companyDetails?.data.startDate}}
+                                                <br> <br>
+                                                <p>{{companyDetails?.data.description}}</p>
+                                            </div>
+                                        </div>
+                                    </div><!-- company info col ends-->
+
+                                    <div class="col-sm-12 col-md-12 col-lg-6 ml-auto" style="height:60%;width:100%">
+                                        <div *ngIf="ch!=true">
+
+                                            <highcharts-chart [Highcharts]="Highcharts" [constructorType]="'stockChart'"
+                                                [options]="chartOptions1" [callbackFunction]="chartCallback"
+                                                style="width:100%; height:90%;display:block">
+                                            </highcharts-chart>
+                                        </div>
+                                        <div *ngIf="ch==true">
+                                            <highcharts-chart [Highcharts]="Highcharts" [constructorType]="'stockChart'"
+                                                [options]="chartOptions" [callbackFunction]="chartCallback"
+                                                style="width:100%; height:90%;display:block">
+                                            </highcharts-chart>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Top News">
+                            <div class="container-fluid">
+                                <br>
+                                <div *ngFor="let curr of news ; index as i">
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-6 mb-4 w-100">
+                                            <a href="#" (click)="addItem(curr)" data-toggle="modal"
+                                                data-target="#exampleModal">
+
+                                                <!-- <div class="d-flex mycard card bg-light text-dark"
+                                                    style="height:100%; box-sizing: border-box;"> -->
+                                                <div class="card bg-light text-dark h-100 w-100">
+                                                    <div class="container py-3 my-auto">
+                                                        <div class="row mx-auto my-auto">
+                                                            <div class="col-sm-12 col-md-12 col-lg-4">
+                                                                <img class="card-img "
+                                                                    src={{curr.urlToImage}} alt="News Image">
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-12 col-lg-8">
+                                                                <div class="card-body p-0">
+                                                                    <span class="text-dark">{{curr.title}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- </div> -->
+                                            </a>
+                                        </div>
+
+                                        <div class="col-sm-12 mb-4 col-md-12 col-lg-6 w-100">
+                                            <div *ngIf="news2[i]" style="height: 100%;">
+                                                <a href="#" (click)="addItem(news2[i])" data-toggle="modal"
+                                                    data-target="#exampleModal">
+
+                                                    <div class="card bg-light text-dark w-100 h-100">
+                                                        <div class="container py-3 my-auto">
+                                                            <div class="row mx-auto my-auto">
+                                                                <div class="col-sm-12 col-md-12 col-lg-4 ">
+                                                                    <img class="card-img"
+                                                                        src={{news2[i].urlToImage}} alt="News Image">
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12 col-lg-8 ">
+                                                                    <div class="card-body p-0">
+                                                                        <span
+                                                                            class="text-dark">{{news2[i].title}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Charts">
+                            <ng-template matTabContent>
+                            <app-hcharts [recchartOptions]="chartOptionshist"></app-hcharts>
+                        </ng-template>
+
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+            <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h4">{{src}}</span>
+                                    <br>
+                                    <span class="text-secondary">{{date|  date:'MMMM dd, yyyy'}}</span>
+                                </div>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="h6">{{modal_item.title}}</span><br>
+                            {{modal_item.description}}<br>
+                            <span class="text-secondary"> For more details click </span> <a href={{modal_item.url}}
+                                target="_blank">here</a>
+
+                        </div>
+                        <div class="alert alert-light"
+                            style="border: 0.5px solid #D3D3D3;width:95%;align-self: center;">
+                            <span class="text-dark mb-4"> Share </span><br><br>
+                            <a class="twitter-share-button pr-2" target="_blank" href="{{href}}" (click)="myurl();">
+
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </a>
+                            <a class="fb-share-button" target="_blank" href="{{href2}}" (click)="myurl2();">
+
+                                <i class="fa fa-facebook-square fa-4x"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="exampleModal2" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form [formGroup]="modalForm">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 id="exampleModalLabel2">{{companyDetails?.data.ticker}}</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                Current Price: {{data2?.last | number :'1.2-2'}}<br>
+                                Quantity: <input type="number" name="inputnum" id="inputnum" value=0 min=0 step=1
+                                    formControlName="inputnum" autofocus="true" oninput="validity.valid||(value='');"
+                                    #inputnum> {{ inputnum.focus() }}
+                            </div>
+                            <div class="modal-footer" style="text-align: left;">
+                                <span class="mr-auto"> Total : {{total  | number :'1.2-2'}} </span>
+                                <button type="button" class="btn btn-success" data-dismiss="modal"
+                                    (click)="buyStock(); "
+                                    [disabled]="inputnum.value === ''|| inputnum.value==0 || 0>inputnum.value">Buy</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-template>

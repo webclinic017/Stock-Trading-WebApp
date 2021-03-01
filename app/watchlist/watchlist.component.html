@@ -1,0 +1,112 @@
+<div *ngIf="isLoadingResults==true; then condition01 else condition02">
+</div>
+<ng-template #condition01>
+    <div class="d-flex justify-content-center w-100 h-100" id="spinner" >
+        <mat-spinner [diameter]="70" style="margin-top:10%"></mat-spinner>
+    </div>
+</ng-template>
+<ng-template #condition02>
+    <div class=" w-75 mx-auto mt-4 ">
+        <span class="h3 d-flex justify-content-start mb-4 ">My Watchlist</span>
+        <div *ngIf="returnlen() && result.length>0 ;then condition1 else condition2">
+        </div>
+        <ng-template #condition1>
+            <div *ngFor="let curr of items ">
+                <div *ngIf="curr.changePercent >0;">
+                    
+                    <div class="alert alert-light pt-4 pb-4 " role="alert" style="border: 0.5px solid 	#D3D3D3;">
+                        <button type="button" class="close mr-n3 mt-n4" data-dismiss="alert" aria-label="Close"
+                            (click)="removeStarFunction(curr.key)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <a [routerLink]="['/details/',curr.key]" class="alert-link">
+                        
+                            <div class="row no-gutters">
+                                <div class="col d-flex h5 mr-auto mb-1 justify-content-start" style="color:black">{{curr.key}}</div>
+                                <div class="col d-flex h5 mb-1 justify-content-end" style="color:#45760b;">{{curr.last | number : '1.2-2'}}</div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col mr-auto d-flex font-weight-normal justify-content-start" style="color:black;">{{curr.name}}</div>
+                                <div class="col d-flex font-weight-normal justify-content-end" style="color:#45760b;"><svg width="1em" height="1em"
+                                        viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+                                    </svg><span >{{curr.change | number : '1.2-2'}}
+                                    ({{curr.changePercent | number : '1.2-2'}}%)</span>
+                                </div>
+
+                            </div>
+                        </a>
+                       
+
+                    </div>
+                
+                </div>
+
+                <div *ngIf="0 > curr.changePercent;">
+                    
+                    <div class="alert alert-light pt-4 pb-4" role="alert" style="border: 0.5px solid#D3D3D3;">
+                        <button type="button" class="close mr-n3 mt-n4 " data-dismiss="alert" aria-label="Close"
+                            (click)="removeStarFunction(curr.key)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <a [routerLink]="['/details/',curr.key]" class="alert-link">
+                            <div class="row no-gutters">
+                    
+                                <div class="col d-flex h5 mr-auto mb-1 justify-content-start" style="color:black"> {{curr.key}}</div>
+                                <div class="col d-flex h5 mb-1 justify-content-end" style="color:#ec0d0d;">{{curr.last | number : '1.2-2'}}</div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col mr-auto d-flex font-weight-normal justify-content-start" style="color:black">{{curr.name}}</div>
+                                <div class="col d-flex font-weight-normal justify-content-end" style="color:#ec0d0d;"><svg width="1em" height="1em"
+                                        viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                    </svg>{{curr.change | number : '1.2-2'}}
+                                    ({{curr.changePercent | number : '1.2-2'}}%)
+                                </div>
+                            </div>
+                        </a>
+                       
+
+                    </div>
+               
+                </div>
+                <div *ngIf=" curr.changePercent==0;">
+                    
+                    <div class="alert alert-light pt-4 pb-4 " role="alert" style="border: 0.5px solid#D3D3D3;">
+                        <button type="button" class="close mr-n3 mt-n4 " data-dismiss="alert" aria-label="Close"
+                            (click)="removeStarFunction(curr.key)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <a [routerLink]="['/details/',curr.key]" class="alert-link">
+                       
+
+                            <div class="row no-gutters">
+                                <div class="col d-flex h5 mr-auto mb-1 justify-content-start" style="color:black">{{curr.key}}</div>
+                                <div class="col d-flex h5 mb-1 justify-content-end" style="color:black">{{curr.last | number : '1.2-2'}}</div>
+                            </div>
+                            <div class="row no-gutters">
+                                <div class="col mr-auto d-flex font-weight-normal justify-content-start" style="color:black">{{curr.name}}</div>
+                                <div class="col d-flex font-weight-normal justify-content-end " style="color:black">{{curr.change | number : '1.2-2'}}
+                                    ({{curr.changePercent | number : '1.2-2'}}%)</div>
+                            </div>
+                        </a>
+
+                        
+
+                    </div>
+               
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #condition2>
+            <div class="alert alert-warning d-flex justify-content-center" role="alert">
+                <span class="text-dark"> Currently you don't have any stock in your watchlist.</span>
+            </div>
+        </ng-template>
+
+    </div>
+</ng-template>
