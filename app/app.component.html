@@ -1,0 +1,77 @@
+<div class="container-fluid w-100 h-100 p-0 mx-auto" style="padding-left:-15px;padding-right:-15px;">
+  <div class="row">
+    <div class="col">
+      <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+        <a class="navbar-brand" routerLink="/">Stock Search</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsingNavbarLg">
+          <span class="navbar-toggler-icon "></span>
+        </button>
+        <div class="navbar-collapse collapse " id="collapsingNavbarLg">
+          <ul class="navbar-nav  ml-auto">
+            <li class="nav-item">
+              <button class="tabs w-100" routerLink="/" style="text-align: right;" routerLinkActive="isactive"
+                [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".collapse.show">
+                <a >
+                  Search
+                </a>
+              </button>
+            </li>
+            <li class="nav-item ">
+              <button class="tabs w-100" routerLink="/Watchlist" style="text-align: right;" routerLinkActive="isactive"
+                [routerLinkActiveOptions]="{exact: true}" data-toggle="collapse" data-target=".collapse.show">
+                <a >
+
+                  Watchlist
+
+                </a>
+              </button>
+            </li>
+            <li class="nav-item ">
+              <button class="tabs w-100" style="text-align: right;" routerLink="/Portfolio" routerLinkActive="isactive"
+                [routerLinkActiveOptions]="{exact:true}" data-toggle="collapse" data-target=".collapse.show">
+                <a >
+
+                  Portfolio
+
+                </a>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+      <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+      <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+      <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+      <!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+      <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+      <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+      <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+
+      <div class="row w-100 h-100 mb-5 mx-auto" style="min-height: 88vh;">
+        <div class="col w-100 h-100 mx-auto" style="min-height: 88vh;">
+
+      <router-outlet></router-outlet>
+
+     
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="row align-item-bottom mt-auto align align-self-end mt-auto" style="vertical-align: bottom;">
+    <div class="col">
+     
+      <footer class="page-footer mx-auto" style="vertical-align: bottom; bottom:0">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+          Powered by Tiingo. Developed by Mahima Bhargava.
+        </div>
+        <!-- Copyright -->
+
+      </footer>
+    </div>
+  </div>
+  <!-- Footer -->
+</div>
